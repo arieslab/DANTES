@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Text Input Example</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-highlight/prism-line-highlight.css" />
+  <link id="light-mode-theme" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.min.css"
+    rel="stylesheet" />
+  <link id="dark-mode-theme" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+
+  <style>
+    :root {
+      --backbg: #222222;
+      --bg: #2D2D2D;
+      --green: #6BAB90;
+      --text: #FFF8E8;
+      --highlight-red: #d607002d;
+      --highlight-green: #008a302c;
+      --link-visited: #aaaaaa;
+      --link-hover: #bbbbbb;
+      -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    h1,
+    body,
+    p,
+    form,
+    input {
+      font-family: Arial, sans-serif;
+      /* Change the font family here */
+    }
+
+    h1 {
+      color: var(--green);
+      margin-left: 10px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 900;
+      font-variant: small-caps;
+    }
+
+    body {
+      background-color: var(--backbg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    #textbox {
+      background-color: var(--bg);
+      padding: 10px;
+      margin: 10px;
+      height: 200px;
+      overflow: auto;
+    }
+
+    /* Add styles for the textarea */
+    textarea {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 10px;
+      margin: 10px;
+      height: 40vh;
+      /* Increase the height */
+      width: 95vw;
+      /* Set a width */
+      border-radius: 5px;
+      /* Round edges */
+      border: none;
+      /* Remove the border */
+      resize: vertical;
+      /* Allow vertical resizing */
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      border-width: 2px;
+      border-style: solid;
+      border-color: var(--green);
+    }
+
+    /* Adjust the submit button style */
+    input[type="submit"] {
+      font-weight: 500;
+      padding: 10px 30px;
+      font-size: 20px;
+      background-color: var(--green);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 0px;
+      margin-bottom: 16px;
+      -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--bg);
+    }
+
+    input[type="submit"]:hover {
+      opacity: 80%;
+      border-color: var(--text);
+    }
+
+    .file-button {
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      opacity: 90%;
+      cursor: pointer;
+      margin-left: 0px;
+      margin-bottom: 16px;
+      border-radius: 5px;
+      -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--text);
+    }
+
+    .file-button:hover {
+      opacity: 70%;
+      border-style: solid;
+      border-color: var(--green);
+    }
+
+    /* Adjust the submit button style */
+    .button {
+      padding: 6px 16px;
+      background-color: var(--green);
+      color: var(--backbg);
+      border: solid;
+      border-color: var(--backbg);
+      border-width: 1px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 16px;
+      margin-bottom: 4px;
+      -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    .button:hover {
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--text);
+      opacity: 75%;
+    }
+
+    .button-refactored {
+      padding: 6px 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 16px;
+      pointer-events: none;
+      margin-bottom: 4px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--backbg);
+    }
+
+    .refactorAll {
+      padding: 12px 24px;
+      background-color: var(--bg);
+      color: var(--text);
+      border: solid;
+      border-color: var(--text);
+      border-width: 1px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 0px;
+      margin-bottom: 6px;
+      -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      font-size: 16px;
+    }
+
+    .refactorAll:hover {
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--green);
+    }
+
+    .select {
+      font-size: 12px;
+      padding: 6px 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-left: 15px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--green);
+    }
+
+    .smells-list {
+      list-style: none;
+      background-color: var(--bg);
+      color: var(--text);
+      flex-direction:
+        column;
+      display: flex;
+      background-color: var(--bg);
+      padding: 32px;
+      margin-left: 14px;
+      margin-right: 40px;
+      margin-top: 14px;
+      font-size: 16px;
+      margin-bottom: 28px;
+      border-radius: 5px;
+    }
+
+    .smells-list-refactored {
+      border-color: var(--green);
+    }
+
+    .code-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-left: 14px;
+      margin-right: 40px;
+      margin-bottom: 4px;
+    }
+
+    .code-container pre {
+      margin: 0;
+    }
+
+    .code-container #originalCode {
+      /* background-color: #282c34; */
+      color: #abb2bf;
+    }
+
+    .code-container #refactoredCode {
+      /* background-color: #282c34; */
+      color: #abb2bf;
+    }
+
+    .data-line {
+      background-color: rgba(223, 8, 8, 0.568);
+    }
+
+    .original .line-highlight {
+      background-color: var(--highlight-red);
+    }
+
+    .refactored .line-highlight {
+      background-color: var(--highlight-green);
+    }
+
+    a:link {
+      color: #5fa1828f;
+    }
+
+    a:link:hover {
+      color: var(--link-hover);
+    }
+
+    a:visited {
+      color: var(--link-visited);
+    }
+
+    .actions_btn-mode {
+      --fromEdge: .5rem;
+      position: fixed;
+      z-index: 5;
+      top: var(--fromEdge);
+      right: var(--fromEdge);
+      width: 3rem;
+      height: 3rem;
+      border: 0;
+      background-color: transparent;
+      color: inherit;
+    }
+
+    @media (min-width: 768px) {
+      .actions_btn-mode {
+        --fromEdge: 1.5rem;
+      }
+    }
+
+    /* Switch icon between dark &amp; light */
+    .actions_svg-mode>* {
+      transition: opacity .3s ease-out;
+    }
+
+    [data-lightMode="light"] .mode-dark,
+    [data-lightMode="dark"] .mode-light {
+      opacity: 1;
+    }
+
+    [data-lightMode="light"] .mode-light,
+    [data-lightMode="dark"] .mode-dark {
+      opacity: 0;
+    }
+
+    .code-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .code-wrapper>pre[class*="language-"] {
+      margin-top: 0;
+      counter-reset: initial;
+      overflow: auto;
+    }
+
+
+    div.code-toolbar {
+      position: relative;
+      counter-reset: initial;
+      overflow: auto;
+    }
+
+    div.code-toolbar>.toolbar {
+      position: absolute;
+      z-index: 10;
+      top: .3em;
+      right: .2em;
+      transition: opacity .3s ease-in-out;
+      opacity: 1
+    }
+
+    div.code-toolbar>.toolbar>.toolbar-item {
+      display: inline-block
+    }
+
+    div.code-toolbar>.toolbar>.toolbar-item>a {
+      cursor: pointer
+    }
+
+    /* feature styles for buttons */
+
+    /* icon copy */
+    div.code-toolbar>.toolbar>.toolbar-item>button>span {
+      color: transparent;
+      background-color: #e6caa8;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'%3E%3C/path%3E%3Cpath d='M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z' fill='currentColor'%3E%3C/path%3E%3C/svg%3E");
+      mask-repeat: no-repeat no-repeat;
+      mask-position: center right;
+    }
+
+    /* hide icon copy */
+    div.code-toolbar>.toolbar>.toolbar-item>button[data-copy-state=copy-success]>span,
+    div.code-toolbar>.toolbar>.toolbar-item>button[data-copy-state=copy-success]:hover>span {
+      mask-image: none;
+      color: #e6caa8;
+      background-color: transparent;
+    }
+
+    /* color of "Copied!" */
+    .copy-to-clipboard-button[data-copy-state~=copy-success] span {
+      color: #e6caa8;
+    }
+
+    /* text copy is hidden */
+    .copy-to-clipboard-button[data-copy-state=copy] span {
+      color: transparent;
+    }
+
+    /* default item color */
+    div.code-toolbar>.toolbar>.toolbar-item {
+      color: #e6caa8;
+    }
+
+    /* remove toolbar items decoration*/
+    div.code-toolbar>.toolbar>.toolbar-item>a,
+    div.code-toolbar>.toolbar>.toolbar-item>button,
+    div.code-toolbar>.toolbar>.toolbar-item>span {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .copy-button {
+      border-radius: 5px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      background-color: var(--bg);
+      color: #fff;
+      border: solid;
+      border-width: 1px;
+      border-color: var(--backbg);
+      padding: 5px;
+      cursor: pointer;
+      z-index: 10;
+      -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+      transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    .copy-button:hover {
+      border-color: var(--text);
+    }
+
+    .copy-button-clicked {
+      border-color: var(--green);
+    }
+
+    .copy-icon {
+      fill: #fff;
+      width: 16px;
+      height: 16px;
+    }
+
+    .check-icon {
+      fill: var(--green);
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Test Smells Detection and Refactoring Tool</h1>
+
+  <form id="myForm">
+    <textarea id="inputText" name="inputText" rows="10" cols="50" placeholder="Insert your test code here"></textarea>
+    <br>
+    <div style="display:flex;    align-items: center;" class="code-container">
+      <input type="submit" value="Submit">
+      <input type="file" id="fileInput" style="display: none;">
+      <input type="button" class="file-button" value="Upload a file"
+        onclick="document.getElementById('fileInput').click();" />
+      <input type="button" class="file-button" value="Feeling lucky! c:"
+        onclick="document.getElementById('fileInput').click();" />
+    </div>
+  </form>
+
+  <div id="response" style="display:flex; margin-left: 14px; color: var(--green);"></div>
+
+  <div style="display:flex; color:var(--green); font-size: 24px; margin-top: 24px; margin-left: 14px;">Analysis result
+    and refactoring:
+  </div>
+
+  <select id="sortOptions" class="select">
+    <option value="testSmell">Order by Smell Type</option>
+    <option value="line">Order by Position in Code</option>
+  </select>
+  <ul id="testSmellsList" class="smells-list">
+    <!-- Content of the testSmellsList div goes here -->
+  </ul>
+  <div class="code-container" class="line-numbers">
+    <div style="display:flex; color:var(--green); font-size: 20px;">Original Code:
+    </div>
+    <div style="display:flex; color:var(--green); font-size: 20px;">Refactored Code:
+    </div>
+  </div>
+
+  <div class="code-container" class="line-numbers">
+    <div style="position: relative; overflow-x: auto; min-height: 100px; display: grid;">
+      <button class="copy-button" onclick="copyToClipboard('originalCodePre', this)">
+        <!doctype html>
+        <svg viewBox="304.219 221.26 16 16" width="24" height="24" style="fill: var(--bg);">
+          <path
+            d="M 304.219 228.01 C 304.219 227.044 305.003 226.26 305.969 226.26 L 307.469 226.26 C 308.047 226.26 308.408 226.885 308.119 227.385 C 307.985 227.617 307.737 227.76 307.469 227.76 L 305.969 227.76 C 305.831 227.76 305.719 227.872 305.719 228.01 L 305.719 235.51 C 305.719 235.648 305.831 235.76 305.969 235.76 L 313.469 235.76 C 313.607 235.76 313.719 235.648 313.719 235.51 L 313.719 234.01 C 313.719 233.433 314.344 233.072 314.844 233.36 C 315.076 233.494 315.219 233.742 315.219 234.01 L 315.219 235.51 C 315.219 236.476 314.436 237.26 313.469 237.26 L 305.969 237.26 C 305.003 237.26 304.219 236.476 304.219 235.51 L 304.219 228.01 Z"
+            style="fill: var(--text);"></path>
+          <path
+            d="M 309.219 223.01 C 309.219 222.044 310.003 221.26 310.969 221.26 L 318.469 221.26 C 319.435 221.26 320.219 222.044 320.219 223.01 L 320.219 230.51 C 320.219 231.476 319.436 232.26 318.469 232.26 L 310.969 232.26 C 310.003 232.26 309.219 231.476 309.219 230.51 L 309.219 223.01 Z M 310.969 222.76 C 310.831 222.76 310.719 222.872 310.719 223.01 L 310.719 230.51 C 310.719 230.648 310.831 230.76 310.969 230.76 L 318.469 230.76 C 318.607 230.76 318.719 230.648 318.719 230.51 L 318.719 223.01 C 318.719 222.872 318.607 222.76 318.469 222.76 L 310.969 222.76 Z"
+            style="fill: var(--text);"></path>
+        </svg>
+      </button>
+      <pre id="originalCodePre" class="line-numbers original" data-line="15-25"
+        style="border-radius: 5px;  overflow-y: clip;"><code id="originalCode" class="language-java"></code></pre>
+    </div>
+    <div style="position: relative;  overflow-x: auto; min-height: 100px; display: grid;">
+      <button class="copy-button" onclick="copyToClipboard('refactoredCodePre', this)">
+        <!doctype html>
+        <svg viewBox="304.219 221.26 16 16" width="24" height="24" style="fill: var(--bg);">
+          <path
+            d="M 304.219 228.01 C 304.219 227.044 305.003 226.26 305.969 226.26 L 307.469 226.26 C 308.047 226.26 308.408 226.885 308.119 227.385 C 307.985 227.617 307.737 227.76 307.469 227.76 L 305.969 227.76 C 305.831 227.76 305.719 227.872 305.719 228.01 L 305.719 235.51 C 305.719 235.648 305.831 235.76 305.969 235.76 L 313.469 235.76 C 313.607 235.76 313.719 235.648 313.719 235.51 L 313.719 234.01 C 313.719 233.433 314.344 233.072 314.844 233.36 C 315.076 233.494 315.219 233.742 315.219 234.01 L 315.219 235.51 C 315.219 236.476 314.436 237.26 313.469 237.26 L 305.969 237.26 C 305.003 237.26 304.219 236.476 304.219 235.51 L 304.219 228.01 Z"
+            style="fill: var(--text);"></path>
+          <path
+            d="M 309.219 223.01 C 309.219 222.044 310.003 221.26 310.969 221.26 L 318.469 221.26 C 319.435 221.26 320.219 222.044 320.219 223.01 L 320.219 230.51 C 320.219 231.476 319.436 232.26 318.469 232.26 L 310.969 232.26 C 310.003 232.26 309.219 231.476 309.219 230.51 L 309.219 223.01 Z M 310.969 222.76 C 310.831 222.76 310.719 222.872 310.719 223.01 L 310.719 230.51 C 310.719 230.648 310.831 230.76 310.969 230.76 L 318.469 230.76 C 318.607 230.76 318.719 230.648 318.719 230.51 L 318.719 223.01 C 318.719 222.872 318.607 222.76 318.469 222.76 L 310.969 222.76 Z"
+            style="fill: var(--text);"></path>
+        </svg>
+      </button>
+      <pre id="refactoredCodePre" class="line-numbers refactored" data-line="12"
+        style="border-radius: 5px; overflow-y: clip;"><code id="refactoredCode" class="language-java"></code></pre>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('myForm');
+    const inputText = document.getElementById('inputText');
+    const originalCodeContainer = document.getElementById('originalCode');
+    const originalCodePre = document.getElementById('originalCodePre');
+    const refactoredCodePre = document.getElementById('refactoredCodePre');
+    const refactoredCodeContainer = document.getElementById('refactoredCode');
+    const responseDiv = document.getElementById('response');
+    const testSmellTableList = document.getElementById('testSmellsList');
+    const sortOptions = document.getElementById('sortOptions');
+
+    const ASSERTION_ROULETTE = "Assertion Roulette";
+    const CONSTRUCTOR_INITIALIZATION = "Constructor Initialization";
+    const EXCEPTION_HANDLING = "Exception Handling";
+    const IGNORED_TEST = "Ignored Test";
+    const EMPTY_TEST = "Empty Test";
+    const DUPLICATE_ASSERT = "Duplicate Assert";
+    const UNNECESSARY_PRINT = "Unnecessary Print";
+    const REDUNDANT_ASSERTION = "Redundant Assertion";
+    const MYSTERY_GUEST = "Mystery Guest";
+    const MAGIC_NUMBER = "Magic Number";
+
+    var buttonList;
+    var testSmellObjectList;
+    var refactorDataLine;
+    var testSmells = [];
+
+    const fileInput = document.getElementById('fileInput')
+
+    sortOptions.addEventListener("change", function (event) {
+      console.log(sortOptions.value);
+      if (testSmells.length == 0) {
+        return;
+      }
+      if (sortOptions.value === "testSmell") {
+        testSmells.sort(function (a, b) {
+          return a.type - ab.type
+        });
+      }
+      else if (sortOptions.value === "line") {
+        testSmells.sort(function (a, b) {
+          return a.lineBegin - b.lineBegin
+        });
+      }
+
+      testSmellTableList.innerHTML = "";
+      testSmells.forEach((value) => {
+        console.log(value.lineBegin + " to " + value.lineEnd);
+
+        var lineDiv = createTestSmellElement(0, value)
+        testSmellTableList.appendChild(lineDiv);
+      });
+      if (testSmellTableList.innerHTML == "") {
+        testSmellTableList.innerHTML = "<a style=\"color: var(--green);font-size: 20px;\">No test smells found!</b>" + '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 30 30.000001" height="20" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="id1"><path d="M 2.328125 4.222656 L 27.734375 4.222656 L 27.734375 24.542969 L 2.328125 24.542969 Z M 2.328125 4.222656 " clip-rule="nonzero"/></clipPath></defs><g transform="translate(-1,2)" clip-path="url(#id1)"><path fill="var(--green)" d="M 27.5 7.53125 L 24.464844 4.542969 C 24.15625 4.238281 23.65625 4.238281 23.347656 4.542969 L 11.035156 16.667969 L 6.824219 12.523438 C 6.527344 12.230469 6 12.230469 5.703125 12.523438 L 2.640625 15.539062 C 2.332031 15.84375 2.332031 16.335938 2.640625 16.640625 L 10.445312 24.324219 C 10.59375 24.472656 10.796875 24.554688 11.007812 24.554688 C 11.214844 24.554688 11.417969 24.472656 11.566406 24.324219 L 27.5 8.632812 C 27.648438 8.488281 27.734375 8.289062 27.734375 8.082031 C 27.734375 7.875 27.648438 7.679688 27.5 7.53125 Z M 27.5 7.53125 " fill-opacity="1" fill-rule="nonzero"/></g></svg>'
+      }
+
+    });
+
+    fileInput.addEventListener('change', function () {
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+          const content = event.target.result;
+          console.log("File Content:");
+          console.log(content);
+          inputText.value = content;
+        }
+
+        reader.readAsText(file);
+      } else {
+        console.log("No file selected.");
+      }
+    });
+
+    function copyToClipboard(code, button) {
+      const codeElement = document.getElementById(code);
+      const text = codeElement.innerText;
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      button.innerHTML = `
+                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 16.17L5.83 13l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            `;
+      button.classList.add("copy-button-clicked");
+
+      setTimeout(() => {
+        button.innerHTML = `<!doctype html>
+                <svg viewBox="304.219 221.26 16 16" width="24" height="24" style="fill: var(--bg);">
+                    <path
+                        d="M 304.219 228.01 C 304.219 227.044 305.003 226.26 305.969 226.26 L 307.469 226.26 C 308.047 226.26 308.408 226.885 308.119 227.385 C 307.985 227.617 307.737 227.76 307.469 227.76 L 305.969 227.76 C 305.831 227.76 305.719 227.872 305.719 228.01 L 305.719 235.51 C 305.719 235.648 305.831 235.76 305.969 235.76 L 313.469 235.76 C 313.607 235.76 313.719 235.648 313.719 235.51 L 313.719 234.01 C 313.719 233.433 314.344 233.072 314.844 233.36 C 315.076 233.494 315.219 233.742 315.219 234.01 L 315.219 235.51 C 315.219 236.476 314.436 237.26 313.469 237.26 L 305.969 237.26 C 305.003 237.26 304.219 236.476 304.219 235.51 L 304.219 228.01 Z"
+                        style="fill: var(--text);"></path>
+                    <path
+                        d="M 309.219 223.01 C 309.219 222.044 310.003 221.26 310.969 221.26 L 318.469 221.26 C 319.435 221.26 320.219 222.044 320.219 223.01 L 320.219 230.51 C 320.219 231.476 319.436 232.26 318.469 232.26 L 310.969 232.26 C 310.003 232.26 309.219 231.476 309.219 230.51 L 309.219 223.01 Z M 310.969 222.76 C 310.831 222.76 310.719 222.872 310.719 223.01 L 310.719 230.51 C 310.719 230.648 310.831 230.76 310.969 230.76 L 318.469 230.76 C 318.607 230.76 318.719 230.648 318.719 230.51 L 318.719 223.01 C 318.719 222.872 318.607 222.76 318.469 222.76 L 310.969 222.76 Z"
+                        style="fill: var(--text);"></path>
+                </svg>
+                `
+        button.classList.remove("copy-button-clicked");
+      }, 3000);
+    }
+
+    form.addEventListener('submit', function (event) {
+      sortOptions.value = "testSmell";
+      testSmellTableList.innerHTML = "";
+      refactoredCodeContainer.innerHTML = "";
+      refactorDataLine = "";
+      originalCodePre.setAttribute('data-line', "");
+      refactoredCodePre.setAttribute('data-line', "");
+      testSmellObjectList = [];
+      buttonList = [];
+      event.preventDefault();
+
+      const inputValue = inputText.value;
+
+      const formData = new URLSearchParams();
+      formData.append('inputText', inputValue);
+
+      fetch('/process-input', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          const jsonData = JSON.parse(data.retVal);
+          testSmells = jsonData;
+          originalCodeContainer.textContent = inputValue;
+          // refactoredCodeContainer.textContent = jsonData;
+          responseDiv.textContent = data.message + " " + jsonData.length + " smells found.";
+
+          var linesWithSmells = "";
+
+          Object.entries(jsonData).forEach(([key, value]) => {
+            console.log(key + ': ' + value.lineBegin + " to " + value.lineEnd);
+            linesWithSmells += value.lineBegin + "-" + value.lineEnd + ",";
+
+            testSmellObjectList.push({ key, value });
+
+            var lineDiv = createTestSmellElement(key, value)
+            testSmellTableList.appendChild(lineDiv);
+          });
+
+          if (testSmellTableList.innerHTML == "") {
+            testSmellTableList.innerHTML = "<a style=\"color: var(--green);font-size: 20px;\">No test smells found!</b>" + '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 30 30.000001" height="20" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="id1"><path d="M 2.328125 4.222656 L 27.734375 4.222656 L 27.734375 24.542969 L 2.328125 24.542969 Z M 2.328125 4.222656 " clip-rule="nonzero"/></clipPath></defs><g transform="translate(-1,2)" clip-path="url(#id1)"><path fill="var(--green)" d="M 27.5 7.53125 L 24.464844 4.542969 C 24.15625 4.238281 23.65625 4.238281 23.347656 4.542969 L 11.035156 16.667969 L 6.824219 12.523438 C 6.527344 12.230469 6 12.230469 5.703125 12.523438 L 2.640625 15.539062 C 2.332031 15.84375 2.332031 16.335938 2.640625 16.640625 L 10.445312 24.324219 C 10.59375 24.472656 10.796875 24.554688 11.007812 24.554688 C 11.214844 24.554688 11.417969 24.472656 11.566406 24.324219 L 27.5 8.632812 C 27.648438 8.488281 27.734375 8.289062 27.734375 8.082031 C 27.734375 7.875 27.648438 7.679688 27.5 7.53125 Z M 27.5 7.53125 " fill-opacity="1" fill-rule="nonzero"/></g></svg>'
+            testSmellTableList.classList.add("smells-list-refactored");
+          } else {
+            var lineDiv = document.createElement('li');
+            var button1 = document.createElement("button");
+            button1.classList.add("button");
+            button1.classList.add("refactorAll");
+            button1.onclick = function () {
+              refactorAll();
+            };
+            button1.innerHTML = "Refactor All";
+            lineDiv.appendChild(button1);
+            testSmellTableList.appendChild(lineDiv);
+            testSmellTableList.classList.remove("smells-list-refactored");
+          }
+
+          originalCodePre.setAttribute('data-line', linesWithSmells);
+
+          // Apply Prism.js syntax highlighting to the code blocks
+          Prism.highlightElement(originalCodeContainer);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          // refactor(formData.toString());
+
+          // Prism.highlightElement(refactoredCodeContainer);
+
+          console.log(data);
+          console.log(data.retVal);
+          console.log(jsonData);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          responseDiv.textContent = 'Error occurred while processing input.';
+        });
+    });
+
+    function createTestSmellElement(key, value) {
+      var lineDiv = document.createElement('li');
+
+      // var line = '<a href="#originalCodePre.' + value.lineBegin + '">Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.<\a>';
+      var a = document.createElement('a');
+      a.href = "#originalCodePre." + value.lineBegin;
+      a.innerHTML = 'Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.';
+      lineDiv.appendChild(a);
+
+      lineDiv.className = 'line';
+      if (value.type === ASSERTION_ROULETTE) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorAA(' + value.lineBegin + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+        var button1 = document.createElement("button");
+        button1.className = "button";
+        button1.onclick = function () {
+          refactorAA(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+      else if (value.type === CONSTRUCTOR_INITIALIZATION) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorCI(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorCI(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+      else if (value.type === EXCEPTION_HANDLING) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorEH(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === IGNORED_TEST) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorIT(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === EMPTY_TEST) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorET(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === DUPLICATE_ASSERT) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorDA(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === UNNECESSARY_PRINT) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorUP(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === REDUNDANT_ASSERTION) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorRA(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === MYSTERY_GUEST) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorMG(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === MAGIC_NUMBER) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorMN(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      return lineDiv;
+    }
+
+    function refactorAA(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorAA', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorCI(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorCI', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorEH(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorEH', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          // console.log(jsonData[0]);
+          // console.log(jsonData[1]);
+
+          refactoredCodeContainer.textContent = jsonData[0];
+          var offset = parseInt(jsonData[1]);
+          var lineBeginValue = parseInt(lineBegin);
+          var lineEndValue = parseInt(lineEnd) + offset;
+          lineEnd = lineEndValue.toString();
+          console.log(lineEnd);
+          console.log(lineEndValue);
+          refactorDataLine += (lineBegin) + "-" + (lineEnd) + ",";
+
+          adjustTestSmellLines(lineEndValue, offset);
+
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorIT(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorIT', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = jsonData[0];
+          var commentLine = parseInt(jsonData[1]);
+
+          var offset = - lineEnd + commentLine + 1
+          adjustTestSmellLines(parseInt(lineBegin), offset);
+
+          refactorDataLine += (commentLine) + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorET(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorET', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = jsonData[0];
+          var dataLine = parseInt(jsonData[1]) + 1;
+          refactorDataLine += dataLine + ",";
+
+          var offset = - lineEnd + parseInt(jsonData[1]) + 1
+          adjustTestSmellLines(parseInt(lineBegin), offset);
+
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorDA(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorDA', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorUP(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorUP', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorRA(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorRA', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorMG(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorMG', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data.retVal)
+          // const jsonData = JSON.parse(data.retVal);
+          // console.log(jsonData);
+          refactoredCodeContainer.textContent = data.retVal;
+          refactorDataLine += lineBegin + "-" + lineEnd + ",";
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorMN(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorMN', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          console.log(jsonData);
+          refactoredCodeContainer.textContent = jsonData[0];
+          refactorDataLine += jsonData[1];
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+          adjustTestSmellLines(parseInt(lineBegin) - 1, 1);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
+    function refactorAll() {
+      const formData = new URLSearchParams();
+
+      fetch('/refactorAll', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          console.log(jsonData);
+          refactoredCodeContainer.textContent = jsonData[0];
+          refactorDataLine += jsonData[1];
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+          Prism.highlightElement(refactoredCodeContainer);
+
+        });
+    }
+
+    function adjustTestSmellLines(lineEndValue, offset) {
+      testSmellObjectList.forEach((item, index) => {
+        var itemLineBeginValue = parseInt(item.value.lineBegin);
+        var itemLineEndValue = parseInt(item.value.lineEnd);
+        if (itemLineBeginValue > lineEndValue) {
+          item.value.lineBegin = (itemLineBeginValue + offset).toString();
+          // console.log(item.value.lineBegin)
+        }
+        if (itemLineEndValue > lineEndValue) {
+          item.value.lineEnd = (itemLineEndValue + offset).toString();
+          // console.log(item.value.lineEnd)
+        }
+
+        var button = buttonList[index];
+
+        switch (item.value.type) {
+          case ASSERTION_ROULETTE:
+            button.onclick = function () {
+              refactorAA(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case CONSTRUCTOR_INITIALIZATION:
+            button.onclick = function () {
+              refactorCI(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case EXCEPTION_HANDLING:
+            button.onclick = function () {
+              refactorEH(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case IGNORED_TEST:
+            button.onclick = function () {
+              refactorIT(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case EMPTY_TEST:
+            button.onclick = function () {
+              refactorET(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case DUPLICATE_ASSERT:
+            button.onclick = function () {
+              refactorDA(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case UNNECESSARY_PRINT:
+            button.onclick = function () {
+              refactorUP(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case REDUNDANT_ASSERTION:
+            button.onclick = function () {
+              refactorRA(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          default:
+            break;
+        }
+      })
+    }
+
+    function printFileContent() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+          const content = event.target.result;
+          console.log("File Content:");
+          console.log(content);
+        }
+
+        reader.readAsText(file);
+      } else {
+        console.log("No file selected.");
+      }
+    }
+
+  </script>
+
+  <script>
+    var supportsES6 = (function () { try { new Function('(a=0)=>a'); return true } catch (e) { console.log('No ES6'); return false } }());
+
+
+    var supportsLocalStorage = (function () { try { var m = new Date().valueOf() + ""; localStorage.setItem(m, m); localStorage.removeItem(m); return true } catch (e) { console.log("localStorage unavailable"); return false } }());
+
+
+    // Adds a mode toggle button, containing an SVG, to the HTML 
+    var Dark_Light_Mode_Toggle_Button = (function (window, document, supportsES6, supportsLocalStorage) {
+
+      if (!supportsES6) return;
+
+      const name = 'mode';
+      const btnClass = 'actions_btn-' + name;
+      const svgClass = 'actions_svg-' + name;
+      const clickedClass = '-js-clicked';
+      const [light, dark] = ['light', 'dark'];
+      const body = document.body;
+      const btn = document.createElement('button');
+
+      const lightLink = document.getElementById("light-mode-theme");
+      const darkLink = document.getElementById("dark-mode-theme");
+
+      let mode;
+
+      const _setAttr = (obj, attr, value) => obj.setAttribute(attr, value);
+      const _modeText = bool => bool ? light : dark;
+      const _animEnd = e => btn.classList.remove(clickedClass);
+
+      const _clicked = _ => {
+
+        // Note: Pressed state is purposefully not linked to the mode setting.
+        // Initially the mode may be light or dark, but pressed state is always false.
+        // _setAttr(btn, 'aria-pressed', btn.getAttribute('aria-pressed') === 'false');
+        _setAttr(btn, 'aria-clicked', btn.getAttribute('aria-clicked') === 'false');
+
+        mode = mode === false;
+        body.style.colorScheme = _modeText(mode); // Ignored where unsupported
+        _setAttr(body, 'data-lightMode', _modeText(mode));
+        _setAttr(btn, 'aria-label', `Change to ${_modeText(!mode)} mode`);
+        supportsLocalStorage && localStorage.setItem('mode', _modeText(mode));
+        btn.classList.add(clickedClass);
+        btn.addEventListener('animationend', _animEnd, { once: true });
+
+        console.log(mode);
+        if (mode) {
+          console.log("light");
+          darkLink.href = "";
+          lightLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.min.css";
+          document.body.style.setProperty('--backbg', "#ede7d8");
+          document.body.style.setProperty('--bg', "#fdf6e3");
+          document.body.style.setProperty('--green', "#508484");
+          document.body.style.setProperty('--text', "#151515");
+          document.body.style.setProperty('--link-hover', "#80D1D1");
+          document.body.style.setProperty('--link-visited', "#325252");
+        }
+        else {
+          console.log("dark");
+          darkLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css";
+          lightLink.href = "";
+          document.body.style.setProperty('--backbg', "#222222");
+          document.body.style.setProperty('--bg', "#2D2D2D");
+          document.body.style.setProperty('--green', "#6BAB90");
+          document.body.style.setProperty('--text', "#FFF8E8");
+          document.body.style.setProperty('--link-hover', "#80D1D1");
+          document.body.style.setProperty('--link-visited', "#2ED1D1");
+
+        }
+
+      };
+
+      // Using symbol defs in the HTML
+      //   const _getSvg = _ => `<svg class=${svgClass} aria-hidden=true focusable=false>
+      //   <use class="${name}-${dark}" xlink:href="#icon-${name}-${dark}"></use>
+      //   <use class="${name}-${light}" xlink:href="#icon-${name}-${light}"></use>
+      // </svg>`;
+
+      // Using an embedded SVG - So I can include this JS into other CodePen projects
+      const _getSvg = _ => `<svg class="${svgClass}" aria-hidden=true focusable=false viewbox="0 0 960 960">
+  <g class="${name}-${light}">
+    <circle cx="476" cy="480" r="458" fill-opacity=".25"/>
+    <path d="M382 33C82 91-118 488 115 767c186 223 492 255 716 9a515 515 0 01-421-243c-94-157-56-368-28-500z"/>
+  </g>
+  <g class="${name}-${dark}">
+    <circle cx="479.5" cy="480.5" r="242"/>
+    <path d="M480 800c22 0 40 18 40 40v80a40 40 0 01-80 0v-80c0-22 18-40 40-40zm480-320c0 22-18 40-40 40h-80a40 40 0 010-80h80c22 0 40 18 40 40zM706 763l57 56a40 40 0 1056-56l-56-57a40 40 0 10-57 57zm-509 56l57-56a40 40 0 10-57-57l-56 57a40 40 0 1056 56zm-77-379a40 40 0 010 80H40a40 40 0 010-80h80zm21-243l56 57a40 40 0 1057-57l-57-56a40 40 0 10-56 56zm622 57l56-57a40 40 0 10-56-56l-57 56a40 40 0 1057 57zM440 40v80a40 40 0 0080 0V40a40 40 0 00-80 0z"/>
+  </g>
+</svg>`;
+
+
+      const _getMode = _ => {
+
+        // Get the OS mode setting
+        mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? false : true;
+
+        // Override OS mode with the locally stored value.
+        // Caters to state persistence across pages and visits.
+        if (supportsLocalStorage && 'mode' in localStorage) {
+          mode = localStorage.getItem('mode') === 'light';
+        }
+      };
+
+
+      const _init = _ => {
+
+        _getMode();
+
+        // color-scheme cannot be set with CSS variable
+        // Ignored where unsupported
+        body.style.colorScheme = _modeText(mode);
+
+        _setAttr(body, 'data-lightMode', _modeText(mode));
+        _setAttr(btn, 'class', btnClass);
+        // _setAttr(btn, 'aria-pressed', false);
+        _setAttr(btn, 'role', 'switch');
+        _setAttr(btn, 'aria-clicked', false);
+        _setAttr(btn, 'aria-label', `Change to ${_modeText(!mode)} mode`);
+
+        btn.innerHTML = _getSvg();
+        btn.addEventListener('click', _clicked);
+
+        // Note: Button is added at the end of the HTML to avoid preceding an accessibility skip-to-content link.
+        // Skip-to-content links should always be the first actionable asset on a web page.
+        body.appendChild(btn);
+
+        if (mode) {
+          console.log("light");
+          darkLink.href = "";
+          lightLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.min.css";
+          document.body.style.setProperty('--backbg', "#ede7d8");
+          document.body.style.setProperty('--bg', "#fdf6e3");
+          document.body.style.setProperty('--green', "#508484");
+          document.body.style.setProperty('--text', "#151515");
+          document.body.style.setProperty('--link-hover', "#80D1D1");
+          document.body.style.setProperty('--link-visited', "#325252");
+        }
+        else {
+          console.log("dark");
+          darkLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css";
+          lightLink.href = "";
+          document.body.style.setProperty('--backbg', "#222222");
+          document.body.style.setProperty('--bg', "#2D2D2D");
+          document.body.style.setProperty('--green', "#6BAB90");
+          document.body.style.setProperty('--text', "#FFF8E8");
+          document.body.style.setProperty('--link-hover', "#9CF7D1");
+          document.body.style.setProperty('--link-visited', "#4C7865");
+
+        }
+
+      };
+
+      _init();
+
+    }(window, document, supportsES6, supportsLocalStorage));
+
+// Includes used:
+// Prism highlighting: https://codepen.io/2kool2/pen/MEbeEg
+
+  </script>
+
+</body>
+
+</html>
