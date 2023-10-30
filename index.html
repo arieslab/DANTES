@@ -30,6 +30,7 @@
       transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
     }
 
+    a,
     h1,
     body,
     p,
@@ -425,7 +426,7 @@
 </head>
 
 <body>
-  <h1>Test Smells Detection and Refactoring Tool</h1>
+  <h1>DANTES</h1>
 
   <form id="myForm">
     <textarea id="inputText" name="inputText" rows="10" cols="50" placeholder="Insert your test code here"></textarea>
@@ -513,7 +514,8 @@
     const UNNECESSARY_PRINT = "Unnecessary Print";
     const REDUNDANT_ASSERTION = "Redundant Assertion";
     const MYSTERY_GUEST = "Mystery Guest";
-    const MAGIC_NUMBER = "Magic Number";
+    const MAGIC_NUMBER = "Magic Number"
+    const GENERAL_FIXTURE = "General Fixture";
 
     var buttonList;
     var testSmellObjectList;
@@ -688,7 +690,7 @@
 
       // var line = '<a href="#originalCodePre.' + value.lineBegin + '">Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.<\a>';
       var a = document.createElement('a');
-      a.href = "#originalCodePre." + value.lineBegin;
+      // a.href = "#originalCodePre." + value.lineBegin;
       a.innerHTML = 'Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.';
       lineDiv.appendChild(a);
 
@@ -823,6 +825,20 @@
         button1.classList.add("button");
         button1.onclick = function () {
           refactorMN(value.lineBegin, value.lineEnd, this);
+        };
+        button1.innerHTML = value.refactor1;
+        lineDiv.appendChild(button1);
+
+        buttonList.push(button1);
+      }
+
+      else if (value.type === GENERAL_FIXTURE) {
+        // lineDiv.innerHTML = line + ' <button class="button" id="' + key + '-refactor1" onclick="refactorEH(' + value.lineBegin + ", " + value.lineEnd + ')">' + value.refactor1 + '</button><button class="button" id=' + key + '-refactor2 onclick="deleteLine(this)">' + value.refactor2 + '</button> <br>';
+
+        var button1 = document.createElement("button");
+        button1.classList.add("button");
+        button1.onclick = function () {
+          refactorGF(value.lineBegin, value.lineEnd, this);
         };
         button1.innerHTML = value.refactor1;
         lineDiv.appendChild(button1);
@@ -1127,6 +1143,49 @@
         });
     }
 
+    function refactorGF(lineBegin, lineEnd, button) {
+      const formData = new URLSearchParams();
+      // formData.append('inputText', data);
+      formData.append('line', lineBegin);
+
+      fetch('/refactorGF', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.retVal)
+          const jsonData = JSON.parse(data.retVal);
+          console.log(jsonData);
+          refactoredCodeContainer.textContent = jsonData[0];
+          refactorDataLine += jsonData[1];
+          refactoredCodePre.setAttribute('data-line', refactorDataLine);
+
+          const stringArray = jsonData[1].split(',');
+
+          // Convert each substring to an integer using the map function
+          const integerArray = stringArray.map(function (substring) {
+            // Use parseInt to convert the substring to an integer
+            return parseInt(substring, 10);
+          });
+
+          console.log(integerArray);
+
+          for( i = parseInt(jsonData[2]); i < integerArray.length - 1; i++){
+            console.log(integerArray[i]);
+            adjustTestSmellLines(integerArray[i], 1);
+          }
+
+          Prism.highlightElement(refactoredCodeContainer);
+
+          button.className = "button-refactored";
+          button.textContent = "Refactored!";
+        });
+    }
+
     function refactorAll() {
       const formData = new URLSearchParams();
 
@@ -1151,16 +1210,17 @@
     }
 
     function adjustTestSmellLines(lineEndValue, offset) {
+      console.log(lineEndValue);
       testSmellObjectList.forEach((item, index) => {
         var itemLineBeginValue = parseInt(item.value.lineBegin);
         var itemLineEndValue = parseInt(item.value.lineEnd);
         if (itemLineBeginValue > lineEndValue) {
           item.value.lineBegin = (itemLineBeginValue + offset).toString();
-          // console.log(item.value.lineBegin)
+          console.log(item.value.lineBegin + " > " + lineEndValue)
         }
         if (itemLineEndValue > lineEndValue) {
           item.value.lineEnd = (itemLineEndValue + offset).toString();
-          // console.log(item.value.lineEnd)
+          console.log(item.value.lineEnd + " > " + lineEndValue)
         }
 
         var button = buttonList[index];
@@ -1204,6 +1264,21 @@
           case REDUNDANT_ASSERTION:
             button.onclick = function () {
               refactorRA(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case MYSTERY_GUEST:
+            button.onclick = function () {
+              refactorMG(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case MAGIC_NUMBER:
+            button.onclick = function () {
+              refactorMN(item.value.lineBegin, item.value.lineEnd, this);
+            };
+            break;
+          case GENERAL_FIXTURE:
+            button.onclick = function () {
+              refactorGF(item.value.lineBegin, item.value.lineEnd, this);
             };
             break;
           default:

@@ -445,6 +445,39 @@ app.post('/refactorMN', (req, res) => {
   });
 });
 
+app.post('/refactorGF', (req, res) => {
+  // const inputText = req.body.inputText;
+  const line = req.body.line;
+  // console.log('Received input:', inputText);
+  console.log('Received input:', line);
+  console.log('Input type: ' + req.headers['content-type']);
+  var retVal = "";
+
+  // Spawn a new Java process and call the method
+  const javaProcess = spawn('java', ['-jar', 'TestSmellDetector.jar', 'GeneralFixture', line.toString()]);
+
+  // Handle the Java process output
+  javaProcess.stdout.on('data', (data) => {
+    // console.log(`Java process output: ${data}`);
+    retVal += data;
+  });
+
+  javaProcess.stderr.on('data', (data) => {
+    console.error(`Java process error: ${data}`);
+  });
+
+  // Send a response to the client
+  // res.send('Java method called successfully.');
+  javaProcess.on('close', (code) => {
+    console.log(`Java process exited with code ${code}`);
+
+    console.log(retVal.toString());
+    // Send the output data back to the client
+    res.json({ retVal, message: 'Code processed successfully' });
+
+  });
+});
+
 app.post('/refactorAll', (req, res) => {
   // const inputText = req.body.inputText;
   // console.log('Received input:', inputText);
