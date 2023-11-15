@@ -1,5 +1,6 @@
-#<p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="300"></p>
+<p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="300"></p>
 <!--# DANTES-->
+#
 Detection ANd refactoring of TEst Smells
 
 DANTES is a web tool designed to detect and refactor test smells in Java unit test code using JUnit. DANTES currently provides detection and refactoring coverage for 11 different types of test smells and is able to refactor a whole test class with a single button click.
