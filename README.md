@@ -1,3 +1,5 @@
+<p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="100"></p>
+
 # DANTES
 Detection ANd refactoring of TEst Smells
 
