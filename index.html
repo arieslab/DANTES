@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Text Input Example</title>
+  <title>DANTES</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.css" />
   <link rel="stylesheet"
@@ -15,6 +15,8 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 
   <style>
     :root {
@@ -46,6 +48,19 @@
       font-family: 'Work Sans', sans-serif;
       font-weight: 900;
       font-variant: small-caps;
+    }
+
+    .method {
+      font-family: monospace;
+    }
+
+    .smell {
+      color: var(--green);
+    }
+
+    .smell {
+      font-size: 18px;
+      padding-top: 8px;
     }
 
     body {
@@ -436,8 +451,8 @@
       <input type="file" id="fileInput" style="display: none;">
       <input type="button" class="file-button" value="Upload a file"
         onclick="document.getElementById('fileInput').click();" />
-      <input type="button" class="file-button" value="Feeling lucky! c:"
-        onclick="document.getElementById('fileInput').click();" />
+      <!-- <input type="button" class="file-button" value="Feeling lucky! c:"
+        onclick="document.getElementById('fileInput').click();" /> -->
     </div>
   </form>
 
@@ -635,12 +650,22 @@
           originalCodeContainer.textContent = inputValue;
           // refactoredCodeContainer.textContent = jsonData;
           responseDiv.textContent = data.message + " " + jsonData.length + " smells found.";
+          responseDiv.innerHTML += '<svg xmlns="http://www.w3.org/2000/svg" width="40" zoomAndPan="magnify" viewBox="0 0 512 512" height="20" style="fill: var(--green);"preserveAspectRatio="xMidYMid meet" transform="translate(-1,-4)" ><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 0c53 0 96 43 96 96v3.6c0 15.7-12.7 28.4-28.4 28.4H188.4c-15.7 0-28.4-12.7-28.4-28.4V96c0-53 43-96 96-96zM41.4 105.4c12.5-12.5 32.8-12.5 45.3 0l64 64c.7 .7 1.3 1.4 1.9 2.1c14.2-7.3 30.4-11.4 47.5-11.4H312c17.1 0 33.2 4.1 47.5 11.4c.6-.7 1.2-1.4 1.9-2.1l64-64c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-64 64c-.7 .7-1.4 1.3-2.1 1.9c6.2 12 10.1 25.3 11.1 39.5H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H416c0 24.6-5.5 47.8-15.4 68.6c2.2 1.3 4.2 2.9 6 4.8l64 64c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-63.1-63.1c-24.5 21.8-55.8 36.2-90.3 39.6V240c0-8.8-7.2-16-16-16s-16 7.2-16 16V479.2c-34.5-3.4-65.8-17.8-90.3-39.6L86.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l64-64c1.9-1.9 3.9-3.4 6-4.8C101.5 367.8 96 344.6 96 320H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H96.3c1.1-14.1 5-27.5 11.1-39.5c-.7-.6-1.4-1.2-2.1-1.9l-64-64c-12.5-12.5-12.5-32.8 0-45.3z" fill-rule="nonzero"/></svg>';
+          responseDiv.className = responseDiv;
 
           var linesWithSmells = "";
 
           Object.entries(jsonData).forEach(([key, value]) => {
             console.log(key + ': ' + value.lineBegin + " to " + value.lineEnd);
             linesWithSmells += value.lineBegin + "-" + value.lineEnd + ",";
+
+            if(value.type == EXCEPTION_HANDLING ||
+              value.type == MYSTERY_GUEST){
+                value.method += "()";
+              }
+            else if(value.type == GENERAL_FIXTURE){
+              value.refactor1 = "Make Fixture Unique"
+            }
 
             testSmellObjectList.push({ key, value });
 
@@ -649,7 +674,7 @@
           });
 
           if (testSmellTableList.innerHTML == "") {
-            testSmellTableList.innerHTML = "<a style=\"color: var(--green);font-size: 20px;\">No test smells found!</b>" + '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 30 30.000001" height="20" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="id1"><path d="M 2.328125 4.222656 L 27.734375 4.222656 L 27.734375 24.542969 L 2.328125 24.542969 Z M 2.328125 4.222656 " clip-rule="nonzero"/></clipPath></defs><g transform="translate(-1,2)" clip-path="url(#id1)"><path fill="var(--green)" d="M 27.5 7.53125 L 24.464844 4.542969 C 24.15625 4.238281 23.65625 4.238281 23.347656 4.542969 L 11.035156 16.667969 L 6.824219 12.523438 C 6.527344 12.230469 6 12.230469 5.703125 12.523438 L 2.640625 15.539062 C 2.332031 15.84375 2.332031 16.335938 2.640625 16.640625 L 10.445312 24.324219 C 10.59375 24.472656 10.796875 24.554688 11.007812 24.554688 C 11.214844 24.554688 11.417969 24.472656 11.566406 24.324219 L 27.5 8.632812 C 27.648438 8.488281 27.734375 8.289062 27.734375 8.082031 C 27.734375 7.875 27.648438 7.679688 27.5 7.53125 Z M 27.5 7.53125 " fill-opacity="1" fill-rule="nonzero"/></g></svg>'
+            testSmellTableList.innerHTML = "<a style=\"color: var(--green);font-size: 20px;\">No test smells found!</b>" + '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" color: var(--green) width="40" zoomAndPan="magnify" viewBox="0 0 30 30.000001" height="20" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="id1"><path d="M 2.328125 4.222656 L 27.734375 4.222656 L 27.734375 24.542969 L 2.328125 24.542969 Z M 2.328125 4.222656 " clip-rule="nonzero"/></clipPath></defs><g transform="translate(-1,2)" clip-path="url(#id1)"><path fill="var(--green)" d="M 27.5 7.53125 L 24.464844 4.542969 C 24.15625 4.238281 23.65625 4.238281 23.347656 4.542969 L 11.035156 16.667969 L 6.824219 12.523438 C 6.527344 12.230469 6 12.230469 5.703125 12.523438 L 2.640625 15.539062 C 2.332031 15.84375 2.332031 16.335938 2.640625 16.640625 L 10.445312 24.324219 C 10.59375 24.472656 10.796875 24.554688 11.007812 24.554688 C 11.214844 24.554688 11.417969 24.472656 11.566406 24.324219 L 27.5 8.632812 C 27.648438 8.488281 27.734375 8.289062 27.734375 8.082031 C 27.734375 7.875 27.648438 7.679688 27.5 7.53125 Z M 27.5 7.53125 " fill-opacity="1" fill-rule="nonzero"/></g></svg>'
             testSmellTableList.classList.add("smells-list-refactored");
           } else {
             var lineDiv = document.createElement('li');
@@ -691,7 +716,7 @@
       // var line = '<a href="#originalCodePre.' + value.lineBegin + '">Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.<\a>';
       var a = document.createElement('a');
       // a.href = "#originalCodePre." + value.lineBegin;
-      a.innerHTML = 'Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.';
+      a.innerHTML = 'Test smell <a class="smell"><b>' + value.type + '</b></a> found in method <a class="method">' + value.method + '</a> at line ' + value.lineBegin + '.';
       lineDiv.appendChild(a);
 
       lineDiv.className = 'line';

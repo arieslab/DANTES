@@ -77,7 +77,12 @@ app.post('/process-input', (req, res) => {
   });
 
   // Spawn a new Java process and call the method
-  const javaProcess = spawn('java', ['-jar', 'TestSmellDetector.jar', 'Detection', '0']);
+  const javaProcess = spawn('java', ['-jar', 'TestSmellDetector.jar', 'Detection', '0'], {
+    env: {
+      NODE_ENV: 'production',
+      PATH: process.env.PATH,
+    },
+  });
 
   // Handle the Java process output
   javaProcess.stdout.on('data', (data) => {
