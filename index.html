@@ -195,7 +195,7 @@
     }
 
     .refactorAll {
-      padding: 12px 24px;
+      padding: 12px 32px;
       background-color: var(--bg);
       color: var(--text);
       border: solid;
@@ -214,6 +214,12 @@
       border-width: 1px;
       border-style: solid;
       border-color: var(--green);
+    }
+
+    .refactorAll-clicked {
+      border-color: var(--backbg);
+      cursor: pointer;
+      pointer-events: none;
     }
 
     .select {
@@ -609,10 +615,12 @@
       var buttonRefactorAll = document.createElement("button");
       buttonRefactorAll.classList.add("button");
       buttonRefactorAll.classList.add("refactorAll");
-      buttonRefactorAll.onclick = function () {
-        refactorAll();
-      };
       buttonRefactorAll.innerHTML = "Refactor All";
+      
+      buttonRefactorAll.onclick = function () {
+        refactorAll(this);
+      };
+     
       lineDiv.appendChild(buttonRefactorAll);
       testSmellTableList.appendChild(lineDiv);
 
@@ -635,6 +643,7 @@
       } else {
         console.log("No file selected.");
       }
+      fileInput.value = ""
     });
 
     function copyToClipboard(code, button) {
@@ -734,7 +743,7 @@
             buttonRefactorAll.classList.add("button");
             buttonRefactorAll.classList.add("refactorAll");
             buttonRefactorAll.onclick = function () {
-              refactorAll();
+              refactorAll(this);
             };
             buttonRefactorAll.innerHTML = "Refactor All";
             lineDiv.appendChild(buttonRefactorAll);
@@ -1231,7 +1240,7 @@
         });
     }
 
-    function refactorAll() {
+    function refactorAll(buttonRefactorAll) {
       const formData = new URLSearchParams();
 
       fetch('/refactorAll', {
@@ -1250,6 +1259,9 @@
           refactorDataLine += jsonData[1];
           refactoredCodePre.setAttribute('data-line', refactorDataLine);
           Prism.highlightElement(refactoredCodeContainer);
+
+          buttonRefactorAll.classList.add("refactorAll-clicked");
+          buttonRefactorAll.innerHTML = 'Refactored! <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" zoomAndPan="magnify" viewBox="0 0 30 30.000001" height="20" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="id1"><path d="M 2.328125 4.222656 L 27.734375 4.222656 L 27.734375 24.542969 L 2.328125 24.542969 Z M 2.328125 4.222656 " clip-rule="nonzero"/></clipPath></defs><g transform="translate(2,4)" clip-path="url(#id1)"><path fill="var(--green)" d="M 27.5 7.53125 L 24.464844 4.542969 C 24.15625 4.238281 23.65625 4.238281 23.347656 4.542969 L 11.035156 16.667969 L 6.824219 12.523438 C 6.527344 12.230469 6 12.230469 5.703125 12.523438 L 2.640625 15.539062 C 2.332031 15.84375 2.332031 16.335938 2.640625 16.640625 L 10.445312 24.324219 C 10.59375 24.472656 10.796875 24.554688 11.007812 24.554688 C 11.214844 24.554688 11.417969 24.472656 11.566406 24.324219 L 27.5 8.632812 C 27.648438 8.488281 27.734375 8.289062 27.734375 8.082031 C 27.734375 7.875 27.648438 7.679688 27.5 7.53125 Z M 27.5 7.53125 " fill-opacity="1" fill-rule="nonzero"/></g></svg>';
 
           testSmellObjectList.forEach((item, index) => {
             item.value.refactor2 = true;
