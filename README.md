@@ -15,8 +15,8 @@ O processo de instalação consiste nos seguintes passos:
 * Baixe ou clone o repositório
 * Navegue até a pasta do projeto
 * Abra o terminal na pasta do projeto
-* Execute o comando ````shell npm install```` no terminal
-* Execute o comando ````shell node app.js```` no terminal
+* Execute o comando ````npm install```` no terminal
+* Execute o comando ````node app.js```` no terminal
 * Abra um navegador no endereço http://localhost:3000/
 
 ````shell
