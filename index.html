@@ -446,6 +446,35 @@
       width: 24px;
       height: 24px;
     }
+
+    .popup {
+      position: relative;
+      display: inline-block;
+      border-width: 1px;
+      border-color: var(--text);
+    }
+
+    .popup .popuptext {
+      visibility: hidden;
+      width: 240px; /* Increased width for a larger pop-up */
+      background-color: var(--bg);
+      color: var(--text);
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px;
+      position: absolute;
+      z-index: 1;
+      bottom: 1.5em;
+      left: 50%;
+      margin-left: -120px;
+      border-style: ridge;
+      border-width: 2px;
+      border-color: var(--green);
+    }
+
+    .popup:hover .popuptext {
+      visibility: visible;
+    }
   </style>
 </head>
 
@@ -738,15 +767,12 @@
 
       // var line = '<a href="#originalCodePre.' + value.lineBegin + '">Test smell ' + value.type + ' found in method ' + value.method + ' at line ' + value.lineBegin + '.<\a>';
       var a = document.createElement('a');
-      // a.href = "#originalCodePre." + value.lineBegin;
-      a.innerHTML = '<a class="smell"><b>' + value.type + '</b></a> detected in method <a class="method">' + value.method + '</a> at line ' + value.lineBegin + '.';
-      lineDiv.appendChild(a);
-
       var button1 = document.createElement("button");
+      var popUpText = "";
 
       lineDiv.className = 'line';
       if (value.type === ASSERTION_ROULETTE) {
-       
+        popUpText = "Multiple unexplained assertions in a test method hinder readability and understanding, making test failures unclear."
         button1.className = "button";
         button1.onclick = function () {
           refactorAA(value.lineBegin, value.lineEnd, this, value);
@@ -754,7 +780,7 @@
         button1.innerHTML = value.refactor1;
       }
       else if (value.type === CONSTRUCTOR_INITIALIZATION) {
-       
+        popUpText = "Test suites should avoid using constructors; fields should be initialized in a setUp() method."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorCI(value.lineBegin, value.lineEnd, this, value);
@@ -762,7 +788,7 @@
         button1.innerHTML = value.refactor1;
       }
       else if (value.type === EXCEPTION_HANDLING) {
-       
+        popUpText = "Test cases should avoid relying on the production code throwing an error or exception; instead use JUnit's assertThrows."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorEH(value.lineBegin, value.lineEnd, this, value);
@@ -771,7 +797,7 @@
       }
 
       else if (value.type === IGNORED_TEST) {
-       
+        popUpText = "Ignored JUnit 4 test methods add compilation overhead and complexity, impacting code comprehension."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorIT(value.lineBegin, value.lineEnd, this, value);
@@ -780,7 +806,7 @@
       }
 
       else if (value.type === EMPTY_TEST) {
-       
+        popUpText = "Empty test methods pose risks; JUnit passes them, potentially masking behavior-breaking changes in production classes."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorET(value.lineBegin, value.lineEnd, this, value);
@@ -789,7 +815,7 @@
       }
 
       else if (value.type === DUPLICATE_ASSERT) {
-       
+        popUpText = "Repeated testing of the same condition within a test method is a test smell. Use separate methods for varying values/tests."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorDA(value.lineBegin, value.lineEnd, this, value);
@@ -798,7 +824,7 @@
       }
 
       else if (value.type === UNNECESSARY_PRINT) {
-       
+        popUpText = "Print statements in unit tests are redundant; used for debugging, they often remain forgotten, adding no value to automated testing."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorUP(value.lineBegin, value.lineEnd, this, value);
@@ -807,7 +833,7 @@
       }
 
       else if (value.type === REDUNDANT_ASSERTION) {
-       
+        popUpText = "Test methods with constant true/false assertions are a smell, often introduced for debugging and inadvertently left behind."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorRA(value.lineBegin, value.lineEnd, this, value);
@@ -816,7 +842,7 @@
       }
 
       else if (value.type === MYSTERY_GUEST) {
-       
+        popUpText = "Using external resources in test methods leads to stability and performance issues. Utilize mock objects instead."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorMG(value.lineBegin, value.lineEnd, this, value);
@@ -825,7 +851,7 @@
       }
 
       else if (value.type === MAGIC_NUMBER) {
-       
+        popUpText = "Using numeric literals in assert statements (magic numbers) is a smell. Substitute them with constants/variables for clarity."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorMN(value.lineBegin, value.lineEnd, this, value);
@@ -834,7 +860,7 @@
       }
 
       else if (value.type === GENERAL_FIXTURE) {
-       
+        popUpText = "Overly general test fixtures, initializing unused fields, lead to unnecessary work during test execution."
         button1.classList.add("button");
         button1.onclick = function () {
           refactorGF(value.lineBegin, value.lineEnd, this, value);
@@ -846,6 +872,9 @@
         button1.className = "button-refactored";
         button1.textContent = "Refactored!";
       }
+
+      a.innerHTML = '<span class="popup"><a class="smell"><b>' + value.type + '</b></a><span class="popuptext">'+popUpText+'</span></span> detected in method <a class="method">' + value.method + '</a> at line ' + value.lineBegin + '.';
+      lineDiv.appendChild(a);
 
       lineDiv.appendChild(button1);
 
@@ -1226,7 +1255,7 @@
             item.value.refactor2 = true;
             var button = buttonList[index];
             button.className = "button-refactored";
-          button.textContent = "Refactored!";
+            button.textContent = "Refactored!";
           });
         });
     }
@@ -1379,7 +1408,7 @@
           console.log("light");
           darkLink.href = "";
           lightLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.min.css";
-          document.body.style.setProperty('--backbg', "#EDF2E9");
+          document.body.style.setProperty('--backbg', "#EFF6EE");
           document.body.style.setProperty('--bg', "#fdf6e3");
           document.body.style.setProperty('--green', "#508484");
           document.body.style.setProperty('--text', "#151515");
@@ -1459,7 +1488,7 @@
           console.log("light");
           darkLink.href = "";
           lightLink.href = "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-solarizedlight.min.css";
-          document.body.style.setProperty('--backbg', "#EDF2E9");
+          document.body.style.setProperty('--backbg', "#EFF6EE");
           document.body.style.setProperty('--bg', "#fdf6e3");
           document.body.style.setProperty('--green', "#508484");
           document.body.style.setProperty('--text', "#151515");
