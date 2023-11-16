@@ -3,23 +3,22 @@
 
 ## Detection ANd refactoring of TEst Smells (DANTES)
 
-DANTES is a web tool designed to detect and refactor test smells in Java unit test code using JUnit. DANTES currently provides detection and refactoring coverage for 11 different types of test smells and is able to refactor a whole test class with a single button click.
+DANTES é uma ferramenta web projetada para detectar e refatorar _test smells_ em códigos de teste de unidade Java usando JUnit. Atualmente, o DANTES oferece cobertura de detecção e refatoração para 11 tipos diferentes de _test smells_ e é capaz de refatorar uma classe de teste inteira com um único clique de botão.
 
-## Dependencies
-In order to use DANTES two dependencies are needed:
-* Java: available in www.java.com
-* NodeJS: available in www.nodejs.org
+## Dependências
+Para se utilizar a DANTES, é necessário ter as seguintes dependências instaladas:
+* Java: disponível em www.java.com
+* NodeJS: disponível em www.nodejs.org
 
-## Installing
+## Instalação
 The installation process for DANTES consists in the following steps:
-* Download or clone the repository
-* Move to the repository's folder
-* Open terminal on the folder
-* Run ````shell npm install````
-* Run ````shell node app.js````
-* Open a browser at http://localhost:3000/
+* Baixe ou clone o repositório
+* Navegue até a pasta do projeto
+* Abra o terminal na pasta do projeto
+* Execute o comando ````shell npm install```` no terminal
+* Execute o comando ````shell node app.js```` no terminal
+* Abra um navegador no endereço http://localhost:3000/
 
-As follows:
 ````shell
 git clone https://github.com/arieslab/DANTES.git
 cd DANTES
@@ -27,21 +26,26 @@ npm install
 node app.js
 ````
 
-## Using the tool
-Here's how the page will look like. Marked in red circles from one to seven are some important points in the tool's page:
-![image](https://github.com/arieslab/DANTES/assets/71935065/0c67a526-ddfa-4379-8dd7-cfb35bd7b684)
+## Utilizando a ferramenta
+Ao se abrir a página da ferramenta, esta deve ser sua estrutura. Marcado em círculos vermelhos numerados de um a nove são alguns pontos importantes da ferramenta:
+![image](https://github.com/arieslab/DANTES/assets/71935065/e7850030-e2e1-425d-8b24-54a37207c79c)
 
-1. Here we have the main text box for the tool, here the user can write or paste the test code that the tool should analyze.
-2. After clicking the green Submit button, the tool will take the code in the text box and detect test smells.
-3. Click the upload a file when you want to paste the content of a file to the tool's text box.
-4. This dropdown menu can change how the test smells detect are going to be organized: select "Order by Smell Type" to order alphabetically, or select "Order by Position in Code" to order the detected smell by order of appearance in the code
-5. The tool will update this box with all the detected smell after a code is sent for analyzing
-6. Here will be displayed the submitted code with the detected code smells highlighted in red
-7. After a refactoring is made with DANTES, this box will be updated showing the refactored line in green.
+1. Esta é a caixa de texto principal da ferramenta, aqui o usuário pode escrever ou colar o código de teste que deseja submeter para análise da ferramenta;
+2. Neste botão o usuário pode mudar o tema entre claro e escuro;
+3. O botão "Detect" deve ser clicado para que a ferramenta faça a detecção de _test smells_ no código fornecido
+4. O usuário pode clicar no botão de "Upload a file" para escolher um arquivo e copiar o conteúdo desse arquivo diretamente para a caixa de texto
+5. Neste menu _dropdown_ o usuáro pode selecionar diferentes formas de ordenar a exibição dos _test smells_ encontrados:
+   * Selecione "Order by Position in Code" para ordenar de acordo com a ordem de aparição dos _smells_ no código;
+   * Selecione "Order by Smell Type" para ordenar pela ordem alfabética dos nomes dos _test smells_;
+6. Após a detecção dos _test smells_, esta caixa será atualizada com a listagem de todos os _test smells_ encontrados;
+7. Nesta caixa será exibido o código enviado para análise com as linhas que contém _test smells_ marcadas em vermelho;
+8. Após feita alguma refatoração, o código refatorado será exibido nesta caixa, com as linhas refatoradas marcadas em verde;
+9. O usuário pode clicar neste botão para copiar para a área de transferência todo o conteúdo do código exibido.
 
-After submitting test code, the box annotated with the number 5 will be updated like so:
-![image](https://github.com/arieslab/DANTES/assets/71935065/5c554a73-5b73-4095-8f1d-7415c5cbc4fe)
-1. Above the box, this line will appear if there was no problem with the detection and will inform how many test smells were found in the provided code.
-2. Within the box, each line will correspond to a different test smell found in the code, for each test smell will be provided the name of the smell, the method in which it was found and which line.
-3. For each test smell a green button will be generated to refactor this specific smell, clicking it will apply the refactoring strategy named.
-4. Click this button to refactor all found test smells in the file.
+Após o envio do código e realizada a detecção, a caixa marcada com número 6 será atualizada desta forma:
+![image](https://github.com/arieslab/DANTES/assets/71935065/9f01309a-21da-4593-a539-481c40882075)
+
+1. Acima da caixa esta linha é gerada mostrando se houve algum erro na detecção e, caso contrário, exibindo a quantidade de _test smells_ encontrada no código;
+2. Dentro da caixa, cada linha corresponde a uma ocorrência de _test smell_ encontrado no código. Na linha é detalhado o tipo do _smell_, o método onde foi encontrado e a linha;
+3. Para cada _smell_ é colocado um botão verde referente à refatoração a ser executada para este _smell_, para executá-la basta pressionar o botão e a ferramenta irá executar a refatoração nomeada no botão;  
+4. Ao clicar este botão todos os _test smells_ encontrados no código será refatorado de uma só vez.
