@@ -1,4 +1,4 @@
-![image](https://github.com/arieslab/DANTES/assets/71935065/47ae9f4e-f960-403c-befb-30391728f374)<p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="528"></p>
+<p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="528"></p>
 <!--# DANTES-->
 
 ## Detection ANd refactoring of TEst Smells (DANTES)
