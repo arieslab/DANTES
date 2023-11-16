@@ -24,8 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        Integer magicNumber10158104 = 4; 	 // It is highly advisible to rename this variable to something that better encapsulate its meaning. 
-        assertEquals(magicNumber10158104, 2 + 2() -> "Add assertion message");
+        assertEquals(4, 2 + 2);
     }
 
     @Test public void shareProblem() throws InterruptedException {
@@ -39,8 +38,8 @@ public class ExampleUnitTest {
         mSchedulerRangeBegin.set(50);
 
         Observable<Integer> beginChanged = valueChanged(begin)
-                // Line removed due to Unnecessary Print: .doOnEach(value -> System.out.println("Begin value changed: " + value.getValue()))
-                // Line removed due to Unnecessary Print: .doOnUnsubscribe(() -> System.out.println("Unshared?!"))
+                .doOnEach(value -> System.out.println("Begin value changed: " + value.getValue()))
+                .doOnUnsubscribe(() -> System.out.println("Unshared?!"))
                 .share();
 
         beginChanged
@@ -50,7 +49,7 @@ public class ExampleUnitTest {
                         // value very quickly use the
                         // debounce function for the timeout
                         // based processing
-                // Line removed due to Unnecessary Print: .doOnEach(value -> System.out.println("Begin value changed 2: " + value.getValue()))
+                .doOnEach(value -> System.out.println("Begin value changed 2: " + value.getValue()))
                 .subscribe(mSchedulerRangeBegin.asAction(), t -> t.printStackTrace());
         beginChanged
                 .map(minutes -> Integer.toString(minutes))
@@ -70,8 +69,8 @@ public class ExampleUnitTest {
         begin.set(100);
         Thread.sleep(1000);
 
-        assertEquals(beginTime.get(), "100", () -> "Add assertion message");
-        assertTrue(rangeBegin.get() == 20, () -> "Add assertion message");
+        assertEquals(beginTime.get(), "100");
+        assertTrue(rangeBegin.get() == 20);
 
         Observable.just(200)
                 .subscribeOn(Schedulers.newThread())
@@ -79,18 +78,18 @@ public class ExampleUnitTest {
         begin.set(200);
         Thread.sleep(1000);
 
-        assertEquals(beginTime.get(), "200", () -> "Add assertion message");
-        assertTrue(rangeBegin.get() == 40, () -> "Add assertion message");
+        assertEquals(beginTime.get(), "200");
+        assertTrue(rangeBegin.get() == 40);
 
-        assertTrue(mSchedulerRangeBegin.get() == 200, () -> "Add assertion message");
+        assertTrue(mSchedulerRangeBegin.get() == 200);
 
         begin.set(300);
         Thread.sleep(1000);
 
-        assertEquals(beginTime.get(), "300", () -> "Add assertion message");
-        assertTrue(rangeBegin.get() == 60, () -> "Add assertion message");
+        assertEquals(beginTime.get(), "300");
+        assertTrue(rangeBegin.get() == 60);
 
-        assertTrue(mSchedulerRangeBegin.get() == 300, () -> "Add assertion message");
+        assertTrue(mSchedulerRangeBegin.get() == 300);
 
     }
 
