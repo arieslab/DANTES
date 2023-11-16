@@ -11,7 +11,7 @@ Para se utilizar a DANTES, é necessário ter as seguintes dependências instala
 * NodeJS: disponível em www.nodejs.org
 
 ## Instalação
-The installation process for DANTES consists in the following steps:
+O processo de instalação consiste nos seguintes passos:
 * Baixe ou clone o repositório
 * Navegue até a pasta do projeto
 * Abra o terminal na pasta do projeto
