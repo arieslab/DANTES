@@ -1,23 +1,25 @@
 <p><img src="https://github.com/arieslab/DANTES/blob/main/logotipo-dantes.png?raw=true" width="528"></p>
 <!--# DANTES-->
 
+[Read this in Portuguese / Ler em Português](README.pt.md)
+
 ## Detection ANd refactoring of TEst Smells (DANTES)
 
-DANTES é uma ferramenta web projetada para detectar e refatorar _test smells_ em códigos de teste de unidade Java usando JUnit. Atualmente, o DANTES oferece cobertura de detecção e refatoração para 11 tipos diferentes de _test smells_ e é capaz de refatorar uma classe de teste inteira com um único clique de botão.
+DANTES is a web tool designed to detect and refactor test smells in Java unit test code using JUnit. Currently, DANTES offers detection and refactoring coverage for 11 different types of test smells and is capable of refactoring an entire test class with a single button click.
 
-## Dependências
-Para se utilizar a DANTES, é necessário ter as seguintes dependências instaladas:
-* Java: disponível em www.java.com
-* NodeJS: disponível em www.nodejs.org
+## Dependencies
+To use DANTES, you need to have the following dependencies installed:
+* Java: available at www.java.com
+* NodeJS: available at em www.nodejs.org
 
-## Instalação
+## Installation
 O processo de instalação consiste nos seguintes passos:
-* Baixe ou clone o repositório
-* Navegue até a pasta do projeto
-* Abra o terminal na pasta do projeto
-* Execute o comando ````npm install```` no terminal
-* Execute o comando ````node app.js```` no terminal
-* Abra um navegador no endereço http://localhost:3000/
+* Download or clone the repository
+* Navigate to the project folder
+* Open a terminal in the project folder
+* Run the command ````npm install```` in the terminal
+* Run the command ````node app.js```` in the terminal
+* Open a browser at the address http://localhost:3000/
 
 ````shell
 git clone https://github.com/arieslab/DANTES.git
@@ -26,26 +28,26 @@ npm install
 node app.js
 ````
 
-## Utilizando a ferramenta
-Ao se abrir a página da ferramenta, esta deve ser sua estrutura. Marcado em círculos vermelhos numerados de um a nove são alguns pontos importantes da ferramenta:
+## Using the Tool
+When opening the tool's page, this should be its structure. Marked in red circles numbered from one to nine are some important points of the tool:
 ![image](https://github.com/arieslab/DANTES/assets/71935065/e7850030-e2e1-425d-8b24-54a37207c79c)
 
-1. Esta é a caixa de texto principal da ferramenta, aqui o usuário pode escrever ou colar o código de teste que deseja submeter para análise da ferramenta;
-2. Neste botão o usuário pode mudar o tema entre claro e escuro;
-3. O botão "Detect" deve ser clicado para que a ferramenta faça a detecção de _test smells_ no código fornecido
-4. O usuário pode clicar no botão de "Upload a file" para escolher um arquivo e copiar o conteúdo desse arquivo diretamente para a caixa de texto
-5. Neste menu _dropdown_ o usuáro pode selecionar diferentes formas de ordenar a exibição dos _test smells_ encontrados:
-   * Selecione "Order by Position in Code" para ordenar de acordo com a ordem de aparição dos _smells_ no código;
-   * Selecione "Order by Smell Type" para ordenar pela ordem alfabética dos nomes dos _test smells_;
-6. Após a detecção dos _test smells_, esta caixa será atualizada com a listagem de todos os _test smells_ encontrados;
-7. Nesta caixa será exibido o código enviado para análise com as linhas que contém _test smells_ marcadas em vermelho;
-8. Após feita alguma refatoração, o código refatorado será exibido nesta caixa, com as linhas refatoradas marcadas em verde;
-9. O usuário pode clicar neste botão para copiar para a área de transferência todo o conteúdo do código exibido.
+1. This is the main text box of the tool; here the user can write or paste the test code they wish to submit for analysis;
+2. With this button, the user can switch the theme between light and dark;
+3. The "Detect" button must be clicked for the tool to perform test smell detection on the provided code;
+4. The user can click the "Upload a file" button to choose a file and copy its content directly into the text box;
+5. In this dropdown menu, the user can select different ways to sort the display of the found test smells:
+   * Select "Order by Position in Code" to sort according to the order of appearance of the smells in the code;
+   * Select "Order by Smell Type" to sort by the alphabetical order of the test smell names;
+6. After the test smells are detected, this box will be updated with a list of all found test smells;
+7. This box will display the code submitted for analysis, with the lines containing test smells marked in red;
+8. After a refactoring is performed, the refactored code will be displayed in this box, with the refactored lines marked in green;
+9. The user can click this button to copy the entire content of the displayed code to the clipboard.
 
-Após o envio do código e realizada a detecção, a caixa marcada com número 6 será atualizada desta forma:
+After submitting the code and performing the detection, the box marked with number 6 will be updated as such:
 ![image](https://github.com/arieslab/DANTES/assets/71935065/9f01309a-21da-4593-a539-481c40882075)
 
-1. Acima da caixa esta linha é gerada mostrando se houve algum erro na detecção e, caso contrário, exibindo a quantidade de _test smells_ encontrada no código;
-2. Dentro da caixa, cada linha corresponde a uma ocorrência de _test smell_ encontrado no código. Na linha é detalhado o tipo do _smell_, o método onde foi encontrado e a linha;
-3. Para cada _smell_ é colocado um botão verde referente à refatoração a ser executada para este _smell_, para executá-la basta pressionar o botão e a ferramenta irá executar a refatoração nomeada no botão;  
-4. Ao clicar este botão todos os _test smells_ encontrados no código será refatorado de uma só vez.
+1. Above the box, this line is updated to display how many test smells were found in the submitted file or if there was any errors during execution;
+2. Inside the box, each line corresponds to an occurrence of a test smell found in the code. The line details the type of smell, the method where it was found, and the line number;
+3. For each smell, a green button is provided for the refactoring to be performed for that smell. To execute it, simply press the button, and the tool will perform the refactoring named on the button;
+4. By clicking this button, all test smells found in the code will be refactored at once.
